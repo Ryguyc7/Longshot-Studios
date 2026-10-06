@@ -341,3 +341,6 @@ footer { margin: 0 6%; }
   .footer-brand > a { display: block; width: min(220px, 100%); justify-self: center; }
   .footer-brand img { width: 100%; margin: 0 auto; }
 }
+
+.document-card a[href^="mailto:"] { overflow-wrap: anywhere; }
+@media(max-width:1000px) { .document-header.menu-open .document-nav { max-height: 330px; } }
