@@ -189,4 +189,16 @@ footer { margin: 0 6%; }
 .hero-game-strip a span { font-size: 16px; font-weight: 600; }
 .hero-game-strip small { display: block; font-size: 13px; font-weight: 400; color: var(--color-ink-secondary); margin-top: 3px; }
 #bombsy,#wordsurge { scroll-margin-top: 24px; }
+/* Center the stacked mobile presentation. */
+@media(max-width:750px) {
+  .hero-copy, .about-lead, .about-details, .game-summary { text-align: center; }
+  .hero-copy p, .about-lead p, .game-summary p { margin-left: auto; margin-right: auto; }
+  .game-actions { justify-content: center; }
+  .about-details > div { padding-left: 0; }
+  .about-number { position: static; display: block; margin-bottom: 12px; }
+  .footer-brand { display: grid; place-items: center; }
+  .footer-links { align-items: center; text-align: center; }
+  .footer-links button { text-align: center; }
+  .footer-bottom { justify-content: center; text-align: center; }
+}
 @media(max-width:750px) { .hero .hero-scroll { bottom: 58px; } .hero-game-strip { gap: 20px; flex-wrap: wrap; padding: 24px; } .strip-label { width: 100%; text-align: center; } .strip-label br { display: none; } .hero-game-strip a { gap: 10px; } .hero-game-strip small { font-size: 12px; } }
