@@ -6,6 +6,7 @@ try {
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
   camera.position.set(4.4, 2.0, 11.4);
   camera.lookAt(0, .25, 0);
+  camera.zoom = 1.18;
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);

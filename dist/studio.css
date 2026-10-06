@@ -119,3 +119,6 @@ footer { margin: 0 6%; }
 .hero h1 { text-shadow: 0 2px 12px rgba(103,15,23,.1); }
 .hero .hero-cta { box-shadow: inset 0 2px 0 rgba(255,255,255,.85), 0 12px 24px -8px rgba(102,9,20,.42); }
 @media(max-width:750px) { .intro.hero { padding-bottom: 140px; } }
+
+.hero-art { height: 480px; }
+@media(max-width:750px) { .hero-art { height: 370px; } }
