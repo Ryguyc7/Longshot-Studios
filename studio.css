@@ -295,3 +295,5 @@ footer { margin: 0 6%; }
   .hero-game-strip { overflow-x: auto; }
   .strip-copy { display: none; }
 }
+
+.hero-header { border-bottom: 1px solid rgba(255,255,255,.8); }
