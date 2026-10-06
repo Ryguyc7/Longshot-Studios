@@ -21,10 +21,11 @@
   <link rel="stylesheet" href="studio.css">
 </head>
 <body>
+  <header class="studio-header hero-header"><a class="brand" href="#" aria-label="Long Shot Studios home"><img class="horizontal-logo" src="longshot-splash/assets/studios/longshot-horizontal.svg" alt="Longshot Studios" width="610" height="218"></a><nav aria-label="Main navigation"><a href="#about">About</a><a href="#work">Our work</a></nav></header>
   <div class="wrap">
 
     <main>
-      <section class="intro hero" aria-labelledby="hero-heading">    <header class="studio-header hero-header"><a class="brand" href="#" aria-label="Long Shot Studios home"><img class="horizontal-logo" src="longshot-splash/assets/studios/longshot-horizontal.svg" alt="Longshot Studios" width="610" height="218"></a><nav aria-label="Main navigation"><a href="#about">About</a><a href="#work">Our work</a></nav></header>
+      <section class="intro hero" aria-labelledby="hero-heading">    
         <div class="hero-copy"><div class="eyebrow badge">Independent apps & games</div><h1 id="hero-heading">Small studio.<br>Big possibilities.</h1><p>Thoughtful apps. Playful games. All our own.</p><a class="btn hero-cta" href="#work">Explore our work</a></div>
         <div class="hero-art" id="target-scene" role="img" aria-label="A target on a wooden stand, with missed arrows planted in a grassy patch and one arrow perfectly in the bullseye"><img class="target-fallback" src="longshot-splash/assets/studios/longshot-wordmark.svg" alt=""></div>
         <a class="hero-scroll" href="#work">Scroll down to view work<span aria-hidden="true">↓</span></a>
@@ -51,5 +52,11 @@
   <script src="longshot-splash/splash.js"></script>
   <script src="splash-startup.js"></script>
   <script type="module" src="hero-target.js"></script>
+<script>
+    const studioHeader = document.querySelector('.hero-header');
+    const updateHeader = () => studioHeader.classList.toggle('is-scrolled', window.scrollY > 16);
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+  </script>
 </body>
 </html>

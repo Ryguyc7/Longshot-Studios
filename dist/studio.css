@@ -215,3 +215,27 @@ footer { margin: 0 6%; }
   .hero .hero-scroll { bottom: 28px; }
   .hero-game-strip { gap: 12px 24px; padding: 20px 16px; }
 }
+
+/* A balanced header that follows the page. */
+.hero-header {
+  position: fixed; left: 50%; right: auto; transform: translateX(-50%);
+  width: 100%; max-width: 1440px; height: 96px; padding: 12px 6%;
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 0; z-index: 50; transition: background .2s, box-shadow .2s;
+}
+.hero-header .brand { display: flex; align-items: center; }
+.hero-header .horizontal-logo { width: 200px; }
+.hero-header nav { align-items: center; }
+.hero-header.is-scrolled { background: rgba(169,29,42,.96); box-shadow: 0 4px 18px rgba(83,14,23,.15); backdrop-filter: blur(12px); }
+#about, #work, #bombsy, #wordsurge { scroll-margin-top: 112px; }
+@media(max-width:750px) {
+  .hero-header { height: 84px; padding: 12px 24px; }
+  .hero-header .horizontal-logo { width: 154px; }
+  .hero-header nav { gap: 18px; font-size: 13px; }
+  #about, #work, #bombsy, #wordsurge { scroll-margin-top: 100px; }
+}
+@media(max-width:380px) {
+  .hero-header { padding-left: 16px; padding-right: 16px; }
+  .hero-header .horizontal-logo { width: 138px; }
+  .hero-header nav { gap: 12px; }
+}
