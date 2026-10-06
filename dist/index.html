@@ -11,7 +11,8 @@
     html[data-splash-pending], html[data-splash-pending] body { background: #f5f1e8; }
   </style>
   <script>
-    document.documentElement.setAttribute('data-splash-pending', '');
+    try { window.shouldPlayIntro = !sessionStorage.getItem('longshot-intro-seen'); } catch { window.shouldPlayIntro = true; }
+    if (window.shouldPlayIntro) document.documentElement.setAttribute('data-splash-pending', '');
     window.splashStartupTimeout = setTimeout(function () {
       document.documentElement.removeAttribute('data-splash-pending');
     }, 8000);
