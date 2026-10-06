@@ -261,7 +261,7 @@ footer { margin: 0 6%; }
 
 .document-page {
   min-height: 100vh;
-  background: radial-gradient(ellipse at 20% 0%, #f2b5a7 0%, transparent 55%), linear-gradient(135deg, #e7a09c, #c86870);
+  background: #f5f1e8;
   background-attachment: fixed;
 }
 .document-page .document-card {
