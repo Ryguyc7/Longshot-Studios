@@ -91,21 +91,32 @@ try {
   beam([0,-1.7,-1.45],[0,1.8,-.32],.20);
   beam([-1.02,-.65,.16],[1.02,-.65,.16],.2,woodLight);
   beam([-.85,-1.3,.1],[.85,-1.3,.1],.12);
+  function patchRadius(angle) {
+    return 3.05*(1+.18*Math.sin(angle*3+.4)+.10*Math.cos(angle*5-.8)+.055*Math.sin(angle*9));
+  }
   function terrainHeight(x,z) {
-    const r = Math.hypot(x,z) / 3.05;
-    return -1.72 + Math.max(0,1-r*r) * (.14 + .10*Math.sin(x*2.1+z*.8) + .07*Math.cos(z*2.7-x));
+    const r = Math.hypot(x,z) / patchRadius(Math.atan2(z,x));
+    return -1.72 + Math.max(0,1-r*r) * (.22 + .17*Math.sin(x*1.6+z*.8) + .12*Math.cos(z*2.1-x));
   }
   const terrainGeometry = new THREE.RingGeometry(0,3.05,96,28);
   const terrainVertices = terrainGeometry.attributes.position;
   for(let i=0;i<terrainVertices.count;i++) {
-    const x=terrainVertices.getX(i),z=-terrainVertices.getY(i);
+    const ox=terrainVertices.getX(i),oz=-terrainVertices.getY(i),a=Math.atan2(oz,ox);
+    const factor=patchRadius(a)/3.05,x=ox*factor,z=oz*factor;
+    terrainVertices.setX(i,x);terrainVertices.setY(i,-z);
     terrainVertices.setZ(i,terrainHeight(x,z)+1.72);
   }
   terrainGeometry.computeVertexNormals();
   const ground = new THREE.Mesh(terrainGeometry,new THREE.MeshStandardMaterial({color:0x48702a,roughness:1}));
   ground.rotation.x=-Math.PI/2; ground.position.y=-1.72; ground.receiveShadow=true;scene.add(ground);
-  const soil = new THREE.Mesh(new THREE.CylinderGeometry(3.05,2.98,.25,96),new THREE.MeshStandardMaterial({color:0x91613b,roughness:1}));
-  soil.position.y=-1.85; soil.receiveShadow=true;scene.add(soil);
+  const soil = new THREE.Mesh(new THREE.CylinderGeometry(3.05,3.00,.07,96),new THREE.MeshStandardMaterial({color:0x91613b,roughness:1}));
+  const soilVertices=soil.geometry.attributes.position;
+  for(let i=0;i<soilVertices.count;i++){
+    const x=soilVertices.getX(i),z=soilVertices.getZ(i),factor=patchRadius(Math.atan2(z,x))/3.05;
+    soilVertices.setX(i,x*factor);soilVertices.setZ(i,z*factor);
+  }
+  soil.geometry.computeVertexNormals();
+  soil.position.y=-1.75; soil.receiveShadow=true;scene.add(soil);
   const contactGround = new THREE.Mesh(new THREE.PlaneGeometry(12,12),new THREE.ShadowMaterial({color:0x6b1020,opacity:.20}));
   contactGround.rotation.x=-Math.PI/2;contactGround.position.y=-1.985;contactGround.receiveShadow=true;scene.add(contactGround);
   const leafProfile=[];
@@ -120,13 +131,13 @@ try {
     leafPositions.setZ(i,leafPositions.getZ(i)*.55+.10*t*t);
   }
   bladeGeometry.computeVertexNormals();
-  const bladeCount=6000;
+  const bladeCount=8200;
   const grass=new THREE.InstancedMesh(bladeGeometry,new THREE.MeshStandardMaterial({color:0xffffff,roughness:1}),bladeCount);
   const dummy=new THREE.Object3D();
   let randomSeed=713;
   function random(){randomSeed=(randomSeed*1664525+1013904223)>>>0;return randomSeed/4294967296;}
   for(let i=0;i<bladeCount;i++) {
-    const angle=random()*Math.PI*2,radius=Math.sqrt(random())*3.05;
+    const angle=random()*Math.PI*2,radius=Math.sqrt(random())*patchRadius(angle);
     const x=Math.cos(angle)*radius,z=Math.sin(angle)*radius;
     dummy.position.set(x,terrainHeight(x,z)-.015,z);
     dummy.rotation.set((random()-.5)*.5,random()*Math.PI*2,(random()-.5)*.5);
