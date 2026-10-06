@@ -336,3 +336,8 @@ footer { margin: 0 6%; }
 }
 .hero h1 { line-height: 1.06; }
 .btn { font-family: 'Nunito', sans-serif; font-weight: 800; }
+
+@media(max-width:750px) {
+  .footer-brand > a { display: block; width: min(220px, 100%); justify-self: center; }
+  .footer-brand img { width: 100%; margin: 0 auto; }
+}
