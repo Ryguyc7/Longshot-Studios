@@ -202,3 +202,16 @@ footer { margin: 0 6%; }
   .footer-bottom { justify-content: center; text-align: center; }
 }
 @media(max-width:750px) { .hero .hero-scroll { bottom: 58px; } .hero-game-strip { gap: 20px; flex-wrap: wrap; padding: 24px; } .strip-label { width: 100%; text-align: center; } .strip-label br { display: none; } .hero-game-strip a { gap: 10px; } .hero-game-strip small { font-size: 12px; } }
+
+/* Keep the complete game strip visible beneath a straight hero edge. */
+@media(min-width:751px) {
+  .intro.hero { min-height: 560px; height: calc(100svh - 104px); padding-top: 112px; padding-bottom: 100px; }
+  .hero-art { height: min(480px, calc(100svh - 316px)); }
+  .hero .hero-scroll { bottom: 20px; }
+  .hero-game-strip { min-height: 104px; padding: 20px 6%; }
+}
+@media(max-width:750px) {
+  .intro.hero { padding-bottom: 120px; }
+  .hero .hero-scroll { bottom: 28px; }
+  .hero-game-strip { gap: 12px 24px; padding: 20px 16px; }
+}
