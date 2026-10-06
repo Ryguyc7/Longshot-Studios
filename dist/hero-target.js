@@ -122,7 +122,7 @@ try {
   const leafProfile=[];
   for(let j=0;j<=12;j++) {
     const t=j/12;
-    leafProfile.push(new THREE.Vector2(.075*Math.pow(Math.sin(Math.PI*t),.65),.28*t));
+    leafProfile.push(new THREE.Vector2(.062*Math.pow(Math.sin(Math.PI*t),.65),.28*t));
   }
   const bladeGeometry=new THREE.LatheGeometry(leafProfile,7);
   const leafPositions=bladeGeometry.attributes.position;
@@ -131,7 +131,7 @@ try {
     leafPositions.setZ(i,leafPositions.getZ(i)*.55+.10*t*t);
   }
   bladeGeometry.computeVertexNormals();
-  const bladeCount=8200;
+  const bladeCount=7400;
   const grass=new THREE.InstancedMesh(bladeGeometry,new THREE.MeshStandardMaterial({color:0xffffff,roughness:1}),bladeCount);
   const dummy=new THREE.Object3D();
   let randomSeed=713;
