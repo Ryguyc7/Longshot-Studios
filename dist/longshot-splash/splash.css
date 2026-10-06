@@ -1,0 +1,50 @@
+.studio-splash{position:fixed;inset:0;width:100vw;height:100svh;max-width:none;max-height:none;border:0;border-radius:0;margin:0;padding:0;overflow:hidden;contain:layout paint;isolation:isolate;box-sizing:border-box;box-shadow:none;backdrop-filter:none;opacity:1;animation:none;transition:none}
+.studio-splash::backdrop{background:transparent;backdrop-filter:none;animation:none;transition:none}
+.studio-splash:focus{outline:none}
+.splash-dark{background:#111827;color:#f4f0e7}.splash-light{background:#f5f1e8;color:#172528}.splash-mono{background:#0a1011;color:#f4f0e7}
+
+.splash-stage{height:100%;display:grid;place-items:center}.brand-art{width:100%}.splash-stage .brand-art{width:min(64vw,360px);opacity:0;will-change:opacity}
+.brand-art img{display:block;width:100%;height:auto;object-fit:contain}
+@media(orientation:landscape){.splash-stage .brand-art{width:min(45vw,420px);max-height:58vh}.splash-stage .brand-art img{max-height:58vh}}
+/* The target opens only when the arrow lands. */
+.longshot-art{position:relative;aspect-ratio:554/331;color:#101719}
+.splash-stage .longshot-art{transform:translateX(1.8%)}
+.longshot-art .longshot-wordmark{clip-path:inset(67% 0 0);filter:none}
+.brand-silhouette.longshot-art .longshot-wordmark,.splash-mono .longshot-art .longshot-wordmark,.splash-dark .longshot-wordmark{filter:brightness(0) invert(1)}
+.longshot-target,.longshot-projectile{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
+.longshot-target path,.longshot-target .longshot-ring{fill:none;stroke:currentColor;stroke-width:17;stroke-linecap:butt}
+.longshot-target .longshot-bullseye{fill:currentColor}
+.longshot-target-after{opacity:0}
+.longshot-target-before .longshot-ring{stroke-dasharray:var(--ring-length) 0;transition:stroke-dasharray 340ms cubic-bezier(.13,.83,.23,1)}
+.longshot-hit .longshot-target-before .longshot-ring{stroke-dasharray:var(--ring-visible) var(--ring-gap)}
+.longshot-open .longshot-target-before,.longshot-static .longshot-target-before{opacity:0}
+.longshot-open .longshot-target-after,.longshot-static .longshot-target-after{opacity:1}
+.longshot-hit .longshot-target{transform-origin:46.93% 38.97%;animation:longshot-recoil 560ms linear both}
+.longshot-projectile{opacity:1;will-change:transform,opacity}
+.studio-splash .longshot-projectile{opacity:0}
+.longshot-hit .longshot-projectile{transform-box:view-box;transform-origin:46.93% 38.97%;animation:longshot-arrow-boing 700ms linear both}
+.longshot-fletching{fill:#ef1f28}
+.longshot-shaft{fill:none;stroke:currentColor;stroke-width:10;stroke-linecap:round}.longshot-nock{fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:round}
+.splash-mono .longshot-art{color:#f4f0e7}
+.splash-dark .longshot-art{color:#f4f0e7}
+.splash-mono .longshot-fletching{fill:currentColor}
+.longshot-impact{position:absolute;left:46.93%;top:38.97%;width:18px;height:18px;transform:translate(-50%,-50%);pointer-events:none}
+.longshot-impact::before,.longshot-impact::after{content:"";position:absolute;inset:0;border-radius:50%;opacity:0}
+.longshot-impact::before{background:currentColor}
+.longshot-impact::after{border:2px solid currentColor}
+.longshot-hit .longshot-impact::before{animation:longshot-flash 240ms ease-out both}
+.longshot-hit .longshot-impact::after{animation:longshot-wave 450ms cubic-bezier(.16,.65,.3,1) both}
+.longshot-static .longshot-projectile{opacity:1}
+@keyframes longshot-recoil{0%,100%{transform:scale(1)}6%{transform:scale(.93)}27%{transform:scale(1.045)}49%{transform:scale(.983)}73%{transform:scale(1.008)}}
+@keyframes longshot-arrow-boing{0%,100%{transform:rotate(0)}5%{transform:rotate(-12deg)}18%{transform:rotate(8deg)}34%{transform:rotate(-5deg)}52%{transform:rotate(3deg)}71%{transform:rotate(-1.4deg)}87%{transform:rotate(.5deg)}}
+@keyframes longshot-flash{0%{opacity:.8;transform:scale(.3)}100%{opacity:0;transform:scale(2.2)}}
+@keyframes longshot-wave{0%{opacity:.7;transform:scale(.5)}100%{opacity:0;transform:scale(4.2)}}
+@media(prefers-reduced-motion:reduce){.longshot-hit .longshot-target,.longshot-hit .longshot-projectile,.longshot-hit .longshot-impact::before,.longshot-hit .longshot-impact::after{animation:none}.longshot-target-before .longshot-ring{transition:none}}
+
+
+/* Keep hidden game scenery from competing with the opening for frames. */
+html[data-splash-pending] body > :not(.studio-splash) *,
+html:has(.studio-splash) .app-background *,
+html:has(.studio-splash) .shooting-stars *,
+html:has(.studio-splash) .cloud-scene *,
+html:has(.studio-splash) .fall-scene * { animation-play-state:paused!important; }

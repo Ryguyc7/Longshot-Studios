@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long Shot Studios Splash Screen</title>
+<style>
+html,body{margin:0;min-height:100%;background:#f5f1e8;color:#101719;font-family:Arial,Helvetica,sans-serif}
+main{min-height:100dvh;display:grid;place-content:center;text-align:center;padding:24px;box-sizing:border-box}
+button{font:inherit;padding:12px 22px;border:1px solid #101719;border-radius:8px;background:#101719;color:#f5f1e8;cursor:pointer}
+html[data-splash-pending] main{visibility:hidden}
+</style>
+<script>
+document.documentElement.setAttribute('data-splash-pending','');
+window.splashStartupTimeout=setTimeout(()=>document.documentElement.removeAttribute('data-splash-pending'),15000);
+</script>
+<link rel="stylesheet" href="splash.css">
+</head>
+<body>
+<main>
+<h1>Long Shot Studios Splash Screen</h1>
+<p>Your reusable splash screen is ready.</p>
+<button id="replay" type="button">Replay with sound</button>
+<p>Copy this whole folder to another project. See README.txt for instructions.</p>
+</main>
+<script src="splash.js"></script>
+<script>
+LongShotStudiosSplash.play();
+document.getElementById('replay').addEventListener('click',()=>LongShotStudiosSplash.play());
+</script>
+</body>
+</html>
