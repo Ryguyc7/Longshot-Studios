@@ -102,7 +102,7 @@ try {
     terrainVertices.setZ(i,terrainHeight(x,z)+1.72);
   }
   terrainGeometry.computeVertexNormals();
-  const ground = new THREE.Mesh(terrainGeometry,new THREE.MeshStandardMaterial({color:0x5a7e2d,roughness:1}));
+  const ground = new THREE.Mesh(terrainGeometry,new THREE.MeshStandardMaterial({color:0x355722,roughness:1}));
   ground.rotation.x=-Math.PI/2; ground.position.y=-1.72; ground.receiveShadow=true;scene.add(ground);
   const soil = new THREE.Mesh(new THREE.CylinderGeometry(3.05,2.98,.25,96),new THREE.MeshStandardMaterial({color:0x91613b,roughness:1}));
   soil.position.y=-1.85; soil.receiveShadow=true;scene.add(soil);
@@ -132,7 +132,7 @@ try {
     dummy.rotation.set((random()-.5)*.5,random()*Math.PI*2,(random()-.5)*.5);
     const height=.65+random()*.7;
     dummy.scale.set(.7+random()*.7,height,.7+random()*.6);dummy.updateMatrix();grass.setMatrixAt(i,dummy.matrix);
-    const greens=[0x72a844,0x82b94d,0x61973c,0x93be58];
+    const greens=[0x315f23,0x3b702b,0x28551e,0x487b30];
     grass.setColorAt(i,new THREE.Color(greens[Math.floor(random()*greens.length)]));
   }
   grass.receiveShadow=true;scene.add(grass);
