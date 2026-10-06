@@ -171,3 +171,11 @@ footer { margin: 0 6%; }
 
 .footer-brand img { width: min(220px,100%); }
 .footer-brand p { max-width: 260px; line-height: 1.6; }
+
+/* Clean, continuous hero-to-work transition. */
+.intro.hero { border-radius: 0; padding-bottom: 156px; }
+.hero .hero-wave { height: 88px; bottom: -2px; width: calc(100% + 4px); left: -2px; pointer-events: none; }
+.hero .hero-scroll { bottom: 106px; gap: 10px; font-size: 13px; letter-spacing: .025em; opacity: .9; }
+.hero-scroll span { font-size: 24px; }
+#work { padding-top: 48px; }
+@media(max-width:750px) { .intro.hero { padding-bottom: 158px; } .hero .hero-wave { height: 58px; } .hero .hero-scroll { bottom: 82px; } #work { padding-top: 32px; } }
