@@ -6,12 +6,23 @@
   <meta name="description" content="Apps and games by Long Shot Studios. An independent studio making small ideas worth spending time with.">
   <title>Long Shot Studios — Apps & Games</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b1b1b'/%3E%3Cpath d='M9 8v16h14v-4H13V8z' fill='white'/%3E%3C/svg%3E">
+  <style>
+    html[data-splash-pending] body > :not(.studio-splash) { visibility: hidden; }
+    html[data-splash-pending], html[data-splash-pending] body { background: #f5f1e8; }
+  </style>
+  <script>
+    document.documentElement.setAttribute('data-splash-pending', '');
+    window.splashStartupTimeout = setTimeout(function () {
+      document.documentElement.removeAttribute('data-splash-pending');
+    }, 8000);
+  </script>
+  <link rel="stylesheet" href="longshot-splash/splash.css">
   <link rel="stylesheet" href="aether.css">
   <link rel="stylesheet" href="studio.css">
 </head>
 <body>
   <div class="wrap">
-    <header class="dock studio-header"><a class="brand" href="#" aria-label="Long Shot Studios home"><span class="mark" aria-hidden="true">L</span><span class="wordmark">Long Shot<br>Studios</span></a><nav aria-label="Main navigation"><a class="btn btn-solid" href="#work">Our work</a></nav></header>
+    <header class="dock studio-header"><a class="brand" href="#" aria-label="Long Shot Studios home"><div class="brand-art ink-light longshot-static studio-logo longshot-art"><img class="longshot-wordmark" src="longshot-splash/assets/studios/longshot-wordmark.svg" alt="Longshot Studios" decoding="async"><svg class="longshot-target" viewBox="0 0 554 331" aria-hidden="true"><g class="longshot-target-before"><circle class="longshot-ring" cx="260" cy="129" r="75" transform="rotate(-33.637 260 129)" style="--ring-length:471.239;--ring-visible:451.179;--ring-gap:20.060"/><circle class="longshot-ring" cx="260" cy="129" r="38" transform="rotate(-26.042 260 129)" style="--ring-length:238.761;--ring-visible:218.523;--ring-gap:20.238"/><circle class="longshot-bullseye" cx="260" cy="129" r="10"/></g><g class="longshot-target-after"><path d="M309.24 72.43 A75 75 0 1 0 322.44 87.46"/><path d="M280.94 97.29 A38 38 0 1 0 294.14 112.32"/><circle class="longshot-bullseye" cx="260" cy="129" r="10"/></g></svg><svg class="longshot-projectile" viewBox="0 0 554 331" aria-hidden="true"><g class="longshot-fletching"><path d="M329 42 367 11 369 12 369 35 330 69Z"/><path d="M334 69 369 35 393 39 359 70Z"/></g><path class="longshot-shaft" d="M260 129 369 34"/><path class="longshot-nock" d="M369 34 379 25"/></svg><i class="longshot-impact" aria-hidden="true"></i></div></a><nav aria-label="Main navigation"><a class="btn btn-solid" href="#work">Our work</a></nav></header>
     <main>
       <section class="intro glass-strong refraction"><div class="eyebrow badge">Independent apps & games</div><h1>Small studio.<br><span>Big possibilities.</span></h1><p>A home for the things we make.<br>Thoughtful apps. Playful games. All our own.</p></section>
       <section id="work" aria-labelledby="work-heading"><div class="section-heading"><h2 id="work-heading">Made by Long Shot</h2><span>Apps & games</span></div>
@@ -22,8 +33,10 @@
       </section>
       <section class="about glass" aria-labelledby="about-heading"><h2 id="about-heading">A little about the studio</h2><p>Long Shot Studios is an independent home for apps and games. Built with curiosity, care, and the belief that an idea is worth a shot.</p></section>
     </main>
-    <footer><span>© <span id="year">2026</span> Long Shot Studios</span><span>Made independently.</span></footer>
+    <footer><span>© <span id="year">2026</span> Long Shot Studios</span><button class="btn btn-secondary btn-sm" id="replay-intro" type="button">Replay intro with sound</button></footer>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="longshot-splash/splash.js"></script>
+  <script src="splash-startup.js"></script>
 </body>
 </html>

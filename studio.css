@@ -7,6 +7,10 @@ a:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: v
 .wrap { max-width: 1200px; margin: auto; padding: 32px clamp(20px, 4vw, 48px) 0; }
 .studio-header { width: 100%; display: flex; justify-content: space-between; padding: 12px 14px 12px 20px; margin-bottom: 48px; box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting); }
 .brand { display: flex; align-items: center; gap: 12px; padding: 2px; }
+.studio-logo { display: block; width: 118px; height: auto; }
+.splash-skip { position: absolute; right: 24px; bottom: 24px; z-index: 2; }
+footer { align-items: center; }
+footer .btn { font-size: 13px; }
 .mark { width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--radius-full); background: var(--color-ink); color: var(--color-ink-inverse); font-size: 25px; font-weight: 500; box-shadow: 0 4px 10px rgba(15,23,42,.28), inset 0 1px 0 rgba(255,255,255,.18); }
 .wordmark { font-size: 14px; line-height: 1.25; font-weight: 600; letter-spacing: -.012em; }
 nav .btn { font-size: 14px; padding: 0 22px; }
