@@ -87,38 +87,63 @@ try {
   beam([0,-1.7,-1.45],[0,1.8,-.32],.20);
   beam([-1.02,-.65,.16],[1.02,-.65,.16],.2,woodLight);
   beam([-.85,-1.3,.1],[.85,-1.3,.1],.12);
-  const ground = new THREE.Mesh(new THREE.CircleGeometry(3.05, 96), new THREE.MeshStandardMaterial({color:0x65862e,roughness:1}));
-  ground.rotation.x = -Math.PI / 2; ground.position.y = -1.72; ground.receiveShadow = true; scene.add(ground);
-  const soil = new THREE.Mesh(new THREE.CylinderGeometry(3.05, 2.98, .18, 96), new THREE.MeshStandardMaterial({color:0x91613b,roughness:1}));
-  soil.position.y = -1.83; soil.receiveShadow = true; scene.add(soil);
-  const grass = new THREE.InstancedMesh(new THREE.ConeGeometry(.028,.19,3), new THREE.MeshStandardMaterial({color:0x82a943,roughness:1}), 2200);
-  const dummy = new THREE.Object3D();
-  for(let i=0;i<2200;i++) {
-    const angle = i*2.39996, radius = Math.sqrt((i+.5)/2200)*3.02;
-    dummy.position.set(Math.cos(angle)*radius,-1.66,Math.sin(angle)*radius);
-    dummy.rotation.set(Math.sin(i*1.7)*.28,angle,Math.cos(i*2.3)*.22);
-    dummy.scale.set(1,.7+(i%7)*.12,1); dummy.updateMatrix(); grass.setMatrixAt(i,dummy.matrix);
-    grass.setColorAt(i,new THREE.Color().setHSL(.22+(i%5)*.009,.42,.27+(i%7)*.028));
+  function terrainHeight(x,z) {
+    const r = Math.hypot(x,z) / 3.05;
+    return -1.72 + Math.max(0,1-r*r) * (.14 + .10*Math.sin(x*2.1+z*.8) + .07*Math.cos(z*2.7-x));
   }
-  grass.receiveShadow = true; scene.add(grass);
+  const terrainGeometry = new THREE.RingGeometry(0,3.05,96,28);
+  const terrainVertices = terrainGeometry.attributes.position;
+  for(let i=0;i<terrainVertices.count;i++) {
+    const x=terrainVertices.getX(i),z=-terrainVertices.getY(i);
+    terrainVertices.setZ(i,terrainHeight(x,z)+1.72);
+  }
+  terrainGeometry.computeVertexNormals();
+  const ground = new THREE.Mesh(terrainGeometry,new THREE.MeshStandardMaterial({color:0x5a7e2d,roughness:1}));
+  ground.rotation.x=-Math.PI/2; ground.position.y=-1.72; ground.receiveShadow=true;scene.add(ground);
+  const soil = new THREE.Mesh(new THREE.CylinderGeometry(3.05,2.98,.25,96),new THREE.MeshStandardMaterial({color:0x91613b,roughness:1}));
+  soil.position.y=-1.85; soil.receiveShadow=true;scene.add(soil);
+  const bladeVertices=[],bladeIndices=[];
+  for(let j=0;j<=5;j++) {
+    const t=j/5,w=.036*(1-t)+.001,bend=.15*t*t;
+    bladeVertices.push(-w,.36*t,bend,w,.36*t,bend);
+    if(j<5){const k=j*2;bladeIndices.push(k,k+1,k+2,k+1,k+3,k+2);}
+  }
+  const bladeGeometry=new THREE.BufferGeometry();
+  bladeGeometry.setAttribute('position',new THREE.Float32BufferAttribute(bladeVertices,3));bladeGeometry.setIndex(bladeIndices);bladeGeometry.computeVertexNormals();
+  const bladeCount=18000;
+  const grass=new THREE.InstancedMesh(bladeGeometry,new THREE.MeshStandardMaterial({color:0x86a940,roughness:.9,side:THREE.DoubleSide}),bladeCount);
+  const dummy=new THREE.Object3D();
+  let randomSeed=713;
+  function random(){randomSeed=(randomSeed*1664525+1013904223)>>>0;return randomSeed/4294967296;}
+  for(let i=0;i<bladeCount;i++) {
+    const angle=random()*Math.PI*2,radius=Math.sqrt(random())*3.05;
+    const x=Math.cos(angle)*radius,z=Math.sin(angle)*radius;
+    dummy.position.set(x,terrainHeight(x,z)-.015,z);
+    dummy.rotation.set((random()-.5)*.85,random()*Math.PI*2,(random()-.5)*.85);
+    const height=.55+random()*.95;
+    dummy.scale.set(.7+random()*.7,height,.7+random()*.6);dummy.updateMatrix();grass.setMatrixAt(i,dummy.matrix);
+    grass.setColorAt(i,new THREE.Color().setHSL(.20+random()*.065,.38+random()*.2,.22+random()*.16));
+  }
+  grass.receiveShadow=true;scene.add(grass);
   const petals = new THREE.InstancedMesh(new THREE.SphereGeometry(.04,6,4),cream,100);
   const centers = new THREE.InstancedMesh(new THREE.SphereGeometry(.028,6,4),new THREE.MeshStandardMaterial({color:0xf5bd48,roughness:1}),20);
   for(let i=0;i<20;i++) {
     const angle=i*2.39996, radius=1.35+(i%5)*.3, x=Math.cos(angle)*radius,z=Math.sin(angle)*radius;
-    dummy.rotation.set(0,0,0); dummy.scale.set(1,.45,1); dummy.position.set(x,-1.53,z);dummy.updateMatrix();centers.setMatrixAt(i,dummy.matrix);
-    for(let j=0;j<5;j++){ const a=j*Math.PI*2/5;dummy.position.set(x+Math.cos(a)*.055,-1.55,z+Math.sin(a)*.055);dummy.updateMatrix();petals.setMatrixAt(i*5+j,dummy.matrix); }
+    dummy.rotation.set(0,0,0); dummy.scale.set(1,.45,1); dummy.position.set(x,terrainHeight(x,z)+.22,z);dummy.updateMatrix();centers.setMatrixAt(i,dummy.matrix);
+    for(let j=0;j<5;j++){ const a=j*Math.PI*2/5;dummy.position.set(x+Math.cos(a)*.055,terrainHeight(x,z)+.20,z+Math.sin(a)*.055);dummy.updateMatrix();petals.setMatrixAt(i*5+j,dummy.matrix); }
   }
   scene.add(petals,centers);
   for (let i = 0; i < 24; i++) {
     const missed = arrow.clone();
     const angle = i * 2.39996;
     const radius = 1.05 + (i % 6) * .29;
-    missed.position.set(Math.cos(angle) * radius, -1.72, Math.sin(angle) * radius + .15);
+    const mx=Math.cos(angle)*radius,mz=Math.sin(angle)*radius+.15;
+    missed.position.set(mx,terrainHeight(mx,mz),mz);
     missed.scale.setScalar(.38 + (i % 4) * .065);
     missed.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), new THREE.Vector3(Math.cos(angle) * .32, 1, Math.sin(angle) * .3).normalize());
     scene.add(missed);
   }
-  scene.traverse(object => { if (object.isMesh && object !== ground) { object.castShadow = true; object.receiveShadow = true; } });
+  scene.traverse(object => { if (object.isMesh && object !== ground) { object.castShadow = object !== grass; object.receiveShadow = true; } });
   const resize = () => {
     const { width, height } = host.getBoundingClientRect();
     renderer.setSize(width, height); camera.aspect = width / height; camera.updateProjectionMatrix();
