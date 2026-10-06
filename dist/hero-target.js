@@ -4,7 +4,7 @@ const host = document.getElementById('target-scene');
 try {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-  camera.position.set(3.8, 2.3, 10.2);
+  camera.position.set(-3.8, 3.0, 11.4);
   camera.lookAt(0, .25, 0);
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -87,15 +87,35 @@ try {
   beam([0,-1.7,-1.45],[0,1.8,-.32],.20);
   beam([-1.02,-.65,.16],[1.02,-.65,.16],.2,woodLight);
   beam([-.85,-1.3,.1],[.85,-1.3,.1],.12);
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(9, 9), new THREE.ShadowMaterial({ color: 0x590a18, opacity: .32 }));
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(3.05, 96), new THREE.MeshStandardMaterial({color:0x65862e,roughness:1}));
   ground.rotation.x = -Math.PI / 2; ground.position.y = -1.72; ground.receiveShadow = true; scene.add(ground);
+  const soil = new THREE.Mesh(new THREE.CylinderGeometry(3.05, 2.98, .18, 96), new THREE.MeshStandardMaterial({color:0x91613b,roughness:1}));
+  soil.position.y = -1.83; soil.receiveShadow = true; scene.add(soil);
+  const grass = new THREE.InstancedMesh(new THREE.ConeGeometry(.028,.19,3), new THREE.MeshStandardMaterial({color:0x82a943,roughness:1}), 2200);
+  const dummy = new THREE.Object3D();
+  for(let i=0;i<2200;i++) {
+    const angle = i*2.39996, radius = Math.sqrt((i+.5)/2200)*3.02;
+    dummy.position.set(Math.cos(angle)*radius,-1.66,Math.sin(angle)*radius);
+    dummy.rotation.set(Math.sin(i*1.7)*.28,angle,Math.cos(i*2.3)*.22);
+    dummy.scale.set(1,.7+(i%7)*.12,1); dummy.updateMatrix(); grass.setMatrixAt(i,dummy.matrix);
+    grass.setColorAt(i,new THREE.Color().setHSL(.22+(i%5)*.009,.42,.27+(i%7)*.028));
+  }
+  grass.receiveShadow = true; scene.add(grass);
+  const petals = new THREE.InstancedMesh(new THREE.SphereGeometry(.04,6,4),cream,100);
+  const centers = new THREE.InstancedMesh(new THREE.SphereGeometry(.028,6,4),new THREE.MeshStandardMaterial({color:0xf5bd48,roughness:1}),20);
+  for(let i=0;i<20;i++) {
+    const angle=i*2.39996, radius=1.35+(i%5)*.3, x=Math.cos(angle)*radius,z=Math.sin(angle)*radius;
+    dummy.rotation.set(0,0,0); dummy.scale.set(1,.45,1); dummy.position.set(x,-1.53,z);dummy.updateMatrix();centers.setMatrixAt(i,dummy.matrix);
+    for(let j=0;j<5;j++){ const a=j*Math.PI*2/5;dummy.position.set(x+Math.cos(a)*.055,-1.55,z+Math.sin(a)*.055);dummy.updateMatrix();petals.setMatrixAt(i*5+j,dummy.matrix); }
+  }
+  scene.add(petals,centers);
   for (let i = 0; i < 24; i++) {
     const missed = arrow.clone();
     const angle = i * 2.39996;
     const radius = 1.05 + (i % 6) * .29;
-    missed.position.set(Math.cos(angle) * radius, -1.64 + (i % 3) * .025, Math.sin(angle) * radius + .15);
-    missed.scale.setScalar(.62 + (i % 4) * .055);
-    missed.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), new THREE.Vector3(Math.cos(angle + .8), .015, Math.sin(angle + .8)).normalize());
+    missed.position.set(Math.cos(angle) * radius, -1.72, Math.sin(angle) * radius + .15);
+    missed.scale.setScalar(.38 + (i % 4) * .065);
+    missed.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), new THREE.Vector3(Math.cos(angle) * .32, 1, Math.sin(angle) * .3).normalize());
     scene.add(missed);
   }
   scene.traverse(object => { if (object.isMesh && object !== ground) { object.castShadow = true; object.receiveShadow = true; } });
