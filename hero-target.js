@@ -168,7 +168,13 @@ try {
   scene.traverse(object => { if (object.isMesh && object !== ground) { object.castShadow = object !== grass && object !== contactGround; object.receiveShadow = true; } });
   const resize = () => {
     const { width, height } = host.getBoundingClientRect();
-    renderer.setSize(width, height); camera.aspect = width / height; camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    // Preserve generous horizontal space for the irregular grass and shadows.
+    camera.zoom = window.matchMedia('(max-width: 750px)').matches
+      ? Math.min(1, camera.aspect * .82)
+      : 1.18;
+    camera.updateProjectionMatrix();
     renderer.render(scene, camera);
   };
   new ResizeObserver(resize).observe(host); resize();
