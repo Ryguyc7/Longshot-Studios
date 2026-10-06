@@ -16,5 +16,10 @@
     }
   }
   document.getElementById('replay-intro').addEventListener('click', () => playIntro(true));
-  playIntro();
+  if (window.shouldPlayIntro) {
+    try { sessionStorage.setItem('longshot-intro-seen', '1'); } catch {}
+    playIntro();
+  } else {
+    document.documentElement.removeAttribute('data-splash-pending');
+  }
 })();
