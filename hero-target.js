@@ -39,7 +39,7 @@ try {
   const point = new THREE.Mesh(new THREE.ConeGeometry(.09, .23, 4), metal);
   point.rotation.z = Math.PI; point.position.y = .02; arrow.add(point);
   for (let i = 0; i < 3; i++) {
-    const shape = new THREE.Shape(); shape.moveTo(0, 0); shape.lineTo(.28, -.16); shape.lineTo(.28, .29); shape.lineTo(0, .48); shape.closePath();
+    const shape = new THREE.Shape(); shape.moveTo(0, 0); shape.lineTo(.28, .19); shape.lineTo(.28, .64); shape.lineTo(0, .48); shape.closePath();
     const fin = new THREE.Mesh(new THREE.ExtrudeGeometry(shape, { depth: .022, bevelEnabled: true, bevelSize: .012, bevelThickness: .01, bevelSegments: 2 }), red);
     fin.position.y = length - .48; fin.rotation.y = i * Math.PI * 2 / 3; arrow.add(fin);
   }
