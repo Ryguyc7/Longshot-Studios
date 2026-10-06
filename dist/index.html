@@ -22,21 +22,26 @@
 </head>
 <body>
   <div class="wrap">
-    <header class="dock studio-header"><a class="brand" href="#" aria-label="Long Shot Studios home"><div class="brand-art ink-light longshot-static studio-logo longshot-art"><img class="longshot-wordmark" src="longshot-splash/assets/studios/longshot-wordmark.svg" alt="Longshot Studios" decoding="async"><svg class="longshot-target" viewBox="0 0 554 331" aria-hidden="true"><g class="longshot-target-before"><circle class="longshot-ring" cx="260" cy="129" r="75" transform="rotate(-33.637 260 129)" style="--ring-length:471.239;--ring-visible:451.179;--ring-gap:20.060"/><circle class="longshot-ring" cx="260" cy="129" r="38" transform="rotate(-26.042 260 129)" style="--ring-length:238.761;--ring-visible:218.523;--ring-gap:20.238"/><circle class="longshot-bullseye" cx="260" cy="129" r="10"/></g><g class="longshot-target-after"><path d="M309.24 72.43 A75 75 0 1 0 322.44 87.46"/><path d="M280.94 97.29 A38 38 0 1 0 294.14 112.32"/><circle class="longshot-bullseye" cx="260" cy="129" r="10"/></g></svg><svg class="longshot-projectile" viewBox="0 0 554 331" aria-hidden="true"><g class="longshot-fletching"><path d="M329 42 367 11 369 12 369 35 330 69Z"/><path d="M334 69 369 35 393 39 359 70Z"/></g><path class="longshot-shaft" d="M260 129 369 34"/><path class="longshot-nock" d="M369 34 379 25"/></svg><i class="longshot-impact" aria-hidden="true"></i></div></a><nav aria-label="Main navigation"><a class="btn btn-solid" href="#work">Our work</a></nav></header>
+
     <main>
-      <section class="intro glass-strong refraction"><div class="eyebrow badge">Independent apps & games</div><h1>Small studio.<br><span>Big possibilities.</span></h1><p>A home for the things we make.<br>Thoughtful apps. Playful games. All our own.</p></section>
-      <section id="work" aria-labelledby="work-heading"><div class="section-heading"><h2 id="work-heading">Made by Long Shot</h2><span>Apps & games</span></div>
+      <section class="intro hero" aria-labelledby="hero-heading">    <header class="studio-header hero-header"><a class="brand" href="#" aria-label="Long Shot Studios home"><div class="brand-art ink-light longshot-static studio-logo longshot-art"><img class="longshot-wordmark" src="longshot-splash/assets/studios/longshot-wordmark.svg" alt="Longshot Studios" decoding="async"><svg class="longshot-target" viewBox="0 0 554 331" aria-hidden="true"><g class="longshot-target-before"><circle class="longshot-ring" cx="260" cy="129" r="75" transform="rotate(-33.637 260 129)" style="--ring-length:471.239;--ring-visible:451.179;--ring-gap:20.060"/><circle class="longshot-ring" cx="260" cy="129" r="38" transform="rotate(-26.042 260 129)" style="--ring-length:238.761;--ring-visible:218.523;--ring-gap:20.238"/><circle class="longshot-bullseye" cx="260" cy="129" r="10"/></g><g class="longshot-target-after"><path d="M309.24 72.43 A75 75 0 1 0 322.44 87.46"/><path d="M280.94 97.29 A38 38 0 1 0 294.14 112.32"/><circle class="longshot-bullseye" cx="260" cy="129" r="10"/></g></svg><svg class="longshot-projectile" viewBox="0 0 554 331" aria-hidden="true"><g class="longshot-fletching"><path d="M329 42 367 11 369 12 369 35 330 69Z"/><path d="M334 69 369 35 393 39 359 70Z"/></g><path class="longshot-shaft" d="M260 129 369 34"/><path class="longshot-nock" d="M369 34 379 25"/></svg><i class="longshot-impact" aria-hidden="true"></i></div></a><nav aria-label="Main navigation"><a href="#work">Our work</a><a href="#about">About</a></nav></header>
+        <div class="hero-copy"><div class="eyebrow badge">Independent apps & games</div><h1 id="hero-heading">Small studio.<br>Big possibilities.</h1><p>Thoughtful apps. Playful games. All our own.</p><a class="btn hero-cta" href="#work">Explore our work</a></div>
+        <div class="hero-art" id="target-scene" role="img" aria-label="A rotating three-dimensional target with an arrow in the bullseye"><img class="target-fallback" src="longshot-splash/assets/studios/longshot-wordmark.svg" alt=""></div>
+        <a class="hero-scroll" href="#work">Scroll down to view work<span aria-hidden="true">↓</span></a><svg class="hero-wave" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true"><path d="M0 68 Q360 -25 720 62 T1440 55 V110 H0Z" fill="#f5f1e8"/></svg>
+      </section>
+      <section id="work" aria-labelledby="work-heading"><div class="section-heading"><h2 id="work-heading">Made by Long Shot</h2><span>A couple of games we’re proud to create.</span></div>
         <div class="grid">
           <article class="card studio-card"><div class="preview"><div class="app-icon" aria-hidden="true">B</div></div><div class="card-info"><h3>Bombsy</h3><span class="category badge">Game</span></div><p>A game by Long Shot Studios.</p></article>
           <article class="card studio-card"><div class="preview game"><div class="app-icon" aria-hidden="true">W</div></div><div class="card-info"><h3>WordSurge</h3><span class="category badge">Game</span></div><p>A game by Long Shot Studios.</p></article>
         </div>
       </section>
-      <section class="about glass" aria-labelledby="about-heading"><h2 id="about-heading">A little about the studio</h2><p>Long Shot Studios is an independent home for apps and games. Built with curiosity, care, and the belief that an idea is worth a shot.</p></section>
+      <section id="about" class="about glass" aria-labelledby="about-heading"><h2 id="about-heading">A little about the studio</h2><p>Long Shot Studios is an independent home for apps and games. Built with curiosity, care, and the belief that an idea is worth a shot.</p></section>
     </main>
     <footer><span>© <span id="year">2026</span> Long Shot Studios</span><button class="btn btn-secondary btn-sm" id="replay-intro" type="button">Replay intro with sound</button></footer>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script src="longshot-splash/splash.js"></script>
   <script src="splash-startup.js"></script>
+  <script type="module" src="hero-target.js"></script>
 </body>
 </html>
