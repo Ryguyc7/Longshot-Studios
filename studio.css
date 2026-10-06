@@ -268,3 +268,6 @@ footer { margin: 0 6%; }
   background: #fff8ec;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 18px 48px rgba(107,29,42,.16);
 }
+
+.about-cta { max-width: 490px; text-align: center; margin-top: 28px; }
+@media(max-width:750px) { .about-cta { margin-left: auto; margin-right: auto; } }
