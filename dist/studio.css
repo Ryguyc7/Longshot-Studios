@@ -168,3 +168,6 @@ footer { margin: 0 6%; }
 .footer-links button:focus-visible { outline: 2px solid #fff1df; outline-offset: 5px; }
 .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid rgba(255,241,223,.22); padding-top: 24px; font-size: 12px; }
 @media(max-width:750px) { .studio-about { grid-template-columns: 1fr; gap: 24px; padding: 48px 7% 56px; } .footer-main { grid-template-columns: 1fr 1fr; gap: 32px 24px; } .footer-brand { grid-column: 1/-1; } .footer-brand img { width: 220px; } .studio-footer { padding: 36px 7% 24px; } }
+
+.footer-brand img { width: min(220px,100%); }
+.footer-brand p { max-width: 260px; line-height: 1.6; }
