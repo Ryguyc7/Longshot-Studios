@@ -122,3 +122,27 @@ footer { margin: 0 6%; }
 
 .hero-art { height: 480px; }
 @media(max-width:750px) { .hero-art { height: 370px; } }
+
+.game-list { display: grid; gap: 40px; }
+.game-row { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: center; padding: 48px; }
+.game-row:nth-child(even) { grid-template-columns: 1.2fr .8fr; }
+.game-row:nth-child(even) .game-visual { order: 2; }
+.game-visual { display: grid; place-items: center; padding: 24px; }
+.game-visual img { width: min(100%,240px); height: auto; border-radius: 26%; box-shadow: 0 22px 36px -18px rgba(73,38,25,.35); }
+.game-summary h3 { font-size: 36px; margin: 16px 0; }
+.game-summary p { font-size: 17px; line-height: 1.75; color: var(--color-ink-secondary); max-width: 540px; }
+.game-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.game-actions .btn { font-size: 14px; }
+.document-wrap { max-width: 900px; margin: auto; padding: 36px 24px 64px; }
+.document-nav { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+.document-card { padding: clamp(24px,5vw,48px); }
+.document-card h1 { font-size: clamp(32px,5vw,48px); }
+.document-card h2 { margin-top: 30px; }
+.document-card p,.document-card li { font-size: 16px; line-height: 1.8; }
+.document-card a:not(.btn) { color: #a8212c; text-decoration: underline; }
+.document-card .contents,.document-card .legal-topics { display: flex; flex-wrap: wrap; gap: 12px; }
+.image-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; margin-top: 24px; }
+.image-gallery figure { margin: 0; }
+.image-gallery img { display: block; width: 100%; height: auto; border-radius: 20px; }
+.image-gallery figcaption { font-size: 14px; padding: 12px 0; color: var(--color-ink-secondary); }
+@media(max-width:750px) { .game-row,.game-row:nth-child(even) { grid-template-columns: 1fr; gap: 12px; padding: 28px; } .game-row:nth-child(even) .game-visual { order: 0; } .game-visual img { width: 180px; } .game-summary h3 { font-size: 30px; } .image-gallery { grid-template-columns: 1fr; } }
