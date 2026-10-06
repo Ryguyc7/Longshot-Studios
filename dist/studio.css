@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap");
 /* Long Shot Studios — Aether composition */
 :root {
   color-scheme: light;
@@ -328,3 +329,10 @@ footer { margin: 0 6%; }
 @media(prefers-reduced-motion:reduce) {
   .document-header .document-nav, .document-toggle span { transition: none; }
 }
+
+.hero h1, .about-lead h2, .section-heading h2, .game-summary h3 {
+  font-family: 'Nunito', 'Arial Rounded MT Bold', sans-serif;
+  font-weight: 900; letter-spacing: -.035em;
+}
+.hero h1 { line-height: 1.06; }
+.btn { font-family: 'Nunito', sans-serif; font-weight: 800; }
