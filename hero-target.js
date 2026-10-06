@@ -4,15 +4,21 @@ const host = document.getElementById('target-scene');
 try {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-  camera.position.set(0, 0.15, 8.4);
+  camera.position.set(3.3, 2.5, 10.8);
+  camera.lookAt(0, .25, 0);
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   host.append(renderer.domElement);
   host.classList.add('scene-ready');
   scene.add(new THREE.HemisphereLight(0xfff7e7, 0x66101a, 3));
   const key = new THREE.DirectionalLight(0xffffff, 4);
-  key.position.set(-3, 5, 6); scene.add(key);
+  key.position.set(-3, 7, 6); key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  Object.assign(key.shadow.camera, { left: -5, right: 5, top: 5, bottom: -5 });
+  key.shadow.bias = -.001; scene.add(key);
   const rim = new THREE.DirectionalLight(0xffd4ae, 3);
   rim.position.set(4, 1, -3); scene.add(rim);
   const cream = new THREE.MeshStandardMaterial({ color: 0xfff3db, roughness: .33, metalness: .08 });
@@ -38,29 +44,39 @@ try {
     fin.position.y = length - .48; fin.rotation.y = i * Math.PI * 2 / 3; arrow.add(fin);
   }
   arrow.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(.52, .48, .7).normalize());
-  model.add(arrow); model.rotation.set(-.13, -.38, -.15);
+  model.add(arrow); model.position.y = .9;
+  const wood = new THREE.MeshStandardMaterial({ color: 0x9a6034, roughness: .85 });
+  const woodLight = new THREE.MeshStandardMaterial({ color: 0xbe844c, roughness: .8 });
+  function beam(from, to, width, material = wood) {
+    const a = new THREE.Vector3(...from), b = new THREE.Vector3(...to);
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, a.distanceTo(b), width), material);
+    mesh.position.copy(a).add(b).multiplyScalar(.5);
+    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), b.sub(a).normalize());
+    mesh.castShadow = true; mesh.receiveShadow = true; scene.add(mesh);
+  }
+  beam([-.95,-1.7,.12],[-.52,1.85,-.22],.18);
+  beam([.95,-1.7,.12],[.52,1.85,-.22],.18);
+  beam([0,-1.7,-1.45],[0,1.8,-.32],.20);
+  beam([-1.02,-.65,.16],[1.02,-.65,.16],.2,woodLight);
+  beam([-.85,-1.3,.1],[.85,-1.3,.1],.12);
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(3.15, 96), new THREE.MeshStandardMaterial({ color: 0xb91f29, roughness: 1 }));
+  ground.rotation.x = -Math.PI / 2; ground.position.y = -1.72; ground.receiveShadow = true; scene.add(ground);
+  for (let i = 0; i < 24; i++) {
+    const missed = arrow.clone();
+    const angle = i * 2.39996;
+    const radius = 1.05 + (i % 6) * .29;
+    missed.position.set(Math.cos(angle) * radius, -1.64 + (i % 3) * .025, Math.sin(angle) * radius + .15);
+    missed.scale.setScalar(.62 + (i % 4) * .055);
+    missed.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), new THREE.Vector3(Math.cos(angle + .8), .015, Math.sin(angle + .8)).normalize());
+    scene.add(missed);
+  }
+  scene.traverse(object => { if (object.isMesh && object !== ground) { object.castShadow = true; object.receiveShadow = true; } });
   const resize = () => {
     const { width, height } = host.getBoundingClientRect();
     renderer.setSize(width, height); camera.aspect = width / height; camera.updateProjectionMatrix();
+    renderer.render(scene, camera);
   };
   new ResizeObserver(resize).observe(host); resize();
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  const clock = new THREE.Clock();
-  renderer.setAnimationLoop(() => {
-    const t = clock.getElapsedTime();
-    if (!motion.matches) {
-      model.rotation.y = -.38 + t * .28;
-      model.position.y = Math.sin(t * .8) * .07;
-    }
-    renderer.render(scene, camera);
-  });
-  new IntersectionObserver(([entry]) => {
-    renderer.setAnimationLoop(entry.isIntersecting ? () => {
-      const t = clock.getElapsedTime();
-      if (!motion.matches) { model.rotation.y = -.38 + t * .28; model.position.y = Math.sin(t * .8) * .07; }
-      renderer.render(scene, camera);
-    } : null);
-  }).observe(host);
 } catch (error) {
   console.warn('Target preview unavailable', error);
 }
