@@ -12,15 +12,18 @@ try {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.VSMShadowMap;
   host.append(renderer.domElement);
   host.classList.add('scene-ready');
-  scene.add(new THREE.HemisphereLight(0xfff7e7, 0x7b2832, 1.5));
-  const key = new THREE.DirectionalLight(0xffead2, 3);
+  scene.add(new THREE.HemisphereLight(0xfff7e7, 0x7b2832, 2.1));
+  const key = new THREE.DirectionalLight(0xffead2, 2.4);
   key.position.set(-3, 7, 6); key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.mapSize.set(2048, 2048);
   Object.assign(key.shadow.camera, { left: -5, right: 5, top: 5, bottom: -5 });
-  key.shadow.bias = -.001; key.shadow.radius = 5; scene.add(key);
+  key.shadow.bias = -.00015; key.shadow.normalBias = .035;
+  key.shadow.radius = 6; key.shadow.blurSamples = 16;
+  key.shadow.camera.near = .5; key.shadow.camera.far = 22;
+  key.shadow.camera.updateProjectionMatrix(); scene.add(key);
   const rim = new THREE.DirectionalLight(0xffd4ae, 1.8);
   rim.position.set(4, 1, -3); scene.add(rim);
   const grainData = new Uint8Array(128 * 256 * 4);
@@ -102,6 +105,8 @@ try {
   ground.rotation.x=-Math.PI/2; ground.position.y=-1.72; ground.receiveShadow=true;scene.add(ground);
   const soil = new THREE.Mesh(new THREE.CylinderGeometry(3.05,2.98,.25,96),new THREE.MeshStandardMaterial({color:0x91613b,roughness:1}));
   soil.position.y=-1.85; soil.receiveShadow=true;scene.add(soil);
+  const contactGround = new THREE.Mesh(new THREE.PlaneGeometry(12,12),new THREE.ShadowMaterial({color:0x6b1020,opacity:.20}));
+  contactGround.rotation.x=-Math.PI/2;contactGround.position.y=-1.985;contactGround.receiveShadow=true;scene.add(contactGround);
   const bladeVertices=[],bladeIndices=[];
   for(let j=0;j<=5;j++) {
     const t=j/5,w=.036*(1-t)+.001,bend=.15*t*t;
@@ -143,7 +148,7 @@ try {
     missed.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), new THREE.Vector3(Math.cos(angle) * .32, 1, Math.sin(angle) * .3).normalize());
     scene.add(missed);
   }
-  scene.traverse(object => { if (object.isMesh && object !== ground) { object.castShadow = object !== grass; object.receiveShadow = true; } });
+  scene.traverse(object => { if (object.isMesh && object !== ground) { object.castShadow = object !== grass && object !== contactGround; object.receiveShadow = true; } });
   const resize = () => {
     const { width, height } = host.getBoundingClientRect();
     renderer.setSize(width, height); camera.aspect = width / height; camera.updateProjectionMatrix();
