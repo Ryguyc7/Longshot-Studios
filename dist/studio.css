@@ -109,3 +109,6 @@ footer { display: flex; justify-content: space-between; gap: 16px; padding: 32px
 .about { margin: 0 6% 32px; }
 footer { margin: 0 6%; }
 @media(max-width:750px) { .intro.hero { padding: 116px 28px 112px; } .hero-header { padding: 14px 28px; } .hero-art { height: 300px; } .hero .hero-scroll { bottom: 76px; } .hero-wave { height: 48px; } #work { padding-top: 16px; } }
+
+.hero-header .horizontal-logo { display: block; width: 225px; height: auto; filter: brightness(0) invert(1); }
+@media(max-width:600px) { .hero-header .horizontal-logo { width: 168px; } .hero-header nav { gap: 16px; font-size: 13px; } .hero-header { padding-left: 24px; padding-right: 24px; } }
