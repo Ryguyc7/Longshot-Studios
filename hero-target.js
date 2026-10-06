@@ -107,16 +107,20 @@ try {
   soil.position.y=-1.85; soil.receiveShadow=true;scene.add(soil);
   const contactGround = new THREE.Mesh(new THREE.PlaneGeometry(12,12),new THREE.ShadowMaterial({color:0x6b1020,opacity:.20}));
   contactGround.rotation.x=-Math.PI/2;contactGround.position.y=-1.985;contactGround.receiveShadow=true;scene.add(contactGround);
-  const bladeVertices=[],bladeIndices=[];
-  for(let j=0;j<=5;j++) {
-    const t=j/5,w=.036*(1-t)+.001,bend=.15*t*t;
-    bladeVertices.push(-w,.36*t,bend,w,.36*t,bend);
-    if(j<5){const k=j*2;bladeIndices.push(k,k+1,k+2,k+1,k+3,k+2);}
+  const leafProfile=[];
+  for(let j=0;j<=12;j++) {
+    const t=j/12;
+    leafProfile.push(new THREE.Vector2(.075*Math.pow(Math.sin(Math.PI*t),.65),.28*t));
   }
-  const bladeGeometry=new THREE.BufferGeometry();
-  bladeGeometry.setAttribute('position',new THREE.Float32BufferAttribute(bladeVertices,3));bladeGeometry.setIndex(bladeIndices);bladeGeometry.computeVertexNormals();
-  const bladeCount=18000;
-  const grass=new THREE.InstancedMesh(bladeGeometry,new THREE.MeshStandardMaterial({color:0x86a940,roughness:.9,side:THREE.DoubleSide}),bladeCount);
+  const bladeGeometry=new THREE.LatheGeometry(leafProfile,7);
+  const leafPositions=bladeGeometry.attributes.position;
+  for(let i=0;i<leafPositions.count;i++) {
+    const t=leafPositions.getY(i)/.28;
+    leafPositions.setZ(i,leafPositions.getZ(i)*.55+.10*t*t);
+  }
+  bladeGeometry.computeVertexNormals();
+  const bladeCount=6000;
+  const grass=new THREE.InstancedMesh(bladeGeometry,new THREE.MeshStandardMaterial({color:0xffffff,roughness:1}),bladeCount);
   const dummy=new THREE.Object3D();
   let randomSeed=713;
   function random(){randomSeed=(randomSeed*1664525+1013904223)>>>0;return randomSeed/4294967296;}
@@ -124,10 +128,11 @@ try {
     const angle=random()*Math.PI*2,radius=Math.sqrt(random())*3.05;
     const x=Math.cos(angle)*radius,z=Math.sin(angle)*radius;
     dummy.position.set(x,terrainHeight(x,z)-.015,z);
-    dummy.rotation.set((random()-.5)*.85,random()*Math.PI*2,(random()-.5)*.85);
-    const height=.55+random()*.95;
+    dummy.rotation.set((random()-.5)*.5,random()*Math.PI*2,(random()-.5)*.5);
+    const height=.65+random()*.7;
     dummy.scale.set(.7+random()*.7,height,.7+random()*.6);dummy.updateMatrix();grass.setMatrixAt(i,dummy.matrix);
-    grass.setColorAt(i,new THREE.Color().setHSL(.20+random()*.065,.38+random()*.2,.22+random()*.16));
+    const greens=[0x72a844,0x82b94d,0x61973c,0x93be58];
+    grass.setColorAt(i,new THREE.Color(greens[Math.floor(random()*greens.length)]));
   }
   grass.receiveShadow=true;scene.add(grass);
   const petals = new THREE.InstancedMesh(new THREE.SphereGeometry(.04,6,4),cream,100);
