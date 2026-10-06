@@ -43,7 +43,7 @@ try {
     const fin = new THREE.Mesh(new THREE.ExtrudeGeometry(shape, { depth: .022, bevelEnabled: true, bevelSize: .012, bevelThickness: .01, bevelSegments: 2 }), red);
     fin.position.y = length - .48; fin.rotation.y = i * Math.PI * 2 / 3; arrow.add(fin);
   }
-  arrow.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(.52, .48, .7).normalize());
+  arrow.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1));
   model.add(arrow); model.position.y = .9;
   const wood = new THREE.MeshStandardMaterial({ color: 0x9a6034, roughness: .85 });
   const woodLight = new THREE.MeshStandardMaterial({ color: 0xbe844c, roughness: .8 });
