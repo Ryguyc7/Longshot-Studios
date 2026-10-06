@@ -296,7 +296,6 @@ footer { margin: 0 6%; }
   .strip-copy { display: none; }
 }
 
-.hero-header { border-bottom: 1px solid rgba(255,255,255,.8); }
 
 @media(max-width:750px) {
   .footer-main > .footer-links:nth-child(2) { grid-column: 1 / -1; }
