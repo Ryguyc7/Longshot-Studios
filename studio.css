@@ -271,3 +271,27 @@ footer { margin: 0 6%; }
 
 .about-cta { max-width: 490px; text-align: center; margin-top: 28px; }
 @media(max-width:750px) { .about-cta { margin-left: auto; margin-right: auto; } }
+
+.game-strip-track, .game-strip-group { display: flex; align-items: center; gap: 56px; }
+.strip-copy { display: none; }
+@media(max-width:750px) {
+  .intro.hero { height: calc(100svh - 100px); min-height: 520px; padding: 88px 24px 66px; grid-template-rows: auto minmax(0,1fr); gap: 12px; }
+  .hero h1 { font-size: clamp(30px, 7.6vw, 48px); margin: 12px 0 18px; }
+  .hero p { font-size: 14px; line-height: 1.5; margin: 0 auto; }
+  .hero .hero-cta { margin-top: 18px; min-height: 42px; }
+  .hero-art { height: 100%; min-height: 0; }
+  .hero .hero-scroll { bottom: 10px; font-size: 12px; gap: 6px; }
+  .hero-game-strip { display: block; height: 100px; padding: 18px 0; overflow: hidden; }
+  .game-strip-track { width: max-content; gap: 0; animation: game-strip-loop 18s linear infinite; }
+  .game-strip-group { flex-shrink: 0; gap: 28px; padding-right: 28px; }
+  .strip-copy { display: flex; }
+  .hero-game-strip a { flex-shrink: 0; padding: 8px; }
+  .hero-game-strip a span { font-size: 15px; }
+  .hero-game-strip:hover .game-strip-track, .hero-game-strip:focus-within .game-strip-track { animation-play-state: paused; }
+}
+@keyframes game-strip-loop { to { transform: translateX(-50%); } }
+@media(prefers-reduced-motion:reduce) {
+  .game-strip-track { animation: none; }
+  .hero-game-strip { overflow-x: auto; }
+  .strip-copy { display: none; }
+}
