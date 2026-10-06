@@ -179,3 +179,14 @@ footer { margin: 0 6%; }
 .hero-scroll span { font-size: 24px; }
 #work { padding-top: 48px; }
 @media(max-width:750px) { .intro.hero { padding-bottom: 158px; } .hero .hero-wave { height: 58px; } .hero .hero-scroll { bottom: 82px; } #work { padding-top: 32px; } }
+
+.hero .hero-scroll { bottom: 74px; }
+.hero-game-strip { display: flex; align-items: center; justify-content: center; gap: 56px; padding: 28px 6% 32px; background: #f5f1e8; border-bottom: 1px solid var(--color-hairline); }
+.strip-label { font-size: 15px; line-height: 1.5; color: var(--color-ink-secondary); }
+.hero-game-strip a { display: flex; align-items: center; gap: 14px; padding: 8px; border-radius: 16px; }
+.hero-game-strip a:hover { background: rgba(255,255,255,.55); }
+.hero-game-strip img { border-radius: 12px; box-shadow: 0 6px 14px -6px rgba(73,38,25,.25); }
+.hero-game-strip a span { font-size: 16px; font-weight: 600; }
+.hero-game-strip small { display: block; font-size: 13px; font-weight: 400; color: var(--color-ink-secondary); margin-top: 3px; }
+#bombsy,#wordsurge { scroll-margin-top: 24px; }
+@media(max-width:750px) { .hero .hero-scroll { bottom: 58px; } .hero-game-strip { gap: 20px; flex-wrap: wrap; padding: 24px; } .strip-label { width: 100%; text-align: center; } .strip-label br { display: none; } .hero-game-strip a { gap: 10px; } .hero-game-strip small { font-size: 12px; } }
